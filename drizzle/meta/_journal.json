@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1741172468031,
+      "tag": "0000_oval_stark_industries",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1741172820978,
+      "tag": "0001_goofy_exodus",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1741173088727,
+      "tag": "0002_far_red_skull",
+      "breakpoints": true
+    }
+  ]
+}
