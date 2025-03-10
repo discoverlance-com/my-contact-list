@@ -1,14 +1,20 @@
 import {
+  data,
   isRouteErrorResponse,
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from "react-router";
 
 import type { Route } from "./+types/root";
 import "./app.css";
+import { getToast } from "./lib/cookies/toast.server";
+import { combineHeaders } from "./utils/misc";
+import { useToast } from "./hooks/use-toast";
+import { Toaster } from "./components/ui/sonner";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -23,6 +29,17 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
+export const loader = async ({ request }: Route.LoaderArgs) => {
+  const { toast, headers } = await getToast(request);
+
+  return data(
+    { toast },
+    {
+      headers: combineHeaders(headers),
+    }
+  );
+};
+
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -36,12 +53,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
         {children}
         <ScrollRestoration />
         <Scripts />
+
+        <Toaster closeButton />
       </body>
     </html>
   );
 }
 
 export default function App() {
+  const data = useLoaderData<typeof loader>();
+  useToast(data.toast);
   return <Outlet />;
 }
 
