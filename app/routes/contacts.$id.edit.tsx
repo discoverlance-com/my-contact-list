@@ -28,7 +28,11 @@ export const loader = async ({ params }: Route.LoaderArgs) => {
     throw data("Contact not found", { status: 404 });
   }
 
-  return data({});
+  return data({ contact });
+};
+
+export const meta = ({ data }: Route.MetaArgs) => {
+  return [{ title: `Edit ${data.contact.name}` }];
 };
 
 export default function Page() {

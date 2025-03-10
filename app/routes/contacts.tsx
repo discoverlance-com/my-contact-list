@@ -2,6 +2,7 @@ import { data, isRouteErrorResponse, Link, Outlet, href } from "react-router";
 import type { Route } from "./+types/contacts";
 import { db } from "~/db/index.server";
 import { Star } from "lucide-react";
+import { Button } from "~/components/ui/button";
 
 export const loader = async ({}: Route.LoaderArgs) => {
   const contacts = await db.query.contactsTable.findMany();
@@ -12,9 +13,14 @@ export const loader = async ({}: Route.LoaderArgs) => {
 export default function Page({ loaderData }: Route.ComponentProps) {
   return (
     <div className="container mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-6">
-        <Link to={href("/contacts")}>Contacts</Link>
-      </h1>
+      <div className="flex flex-row gap-8 items-center mb-6">
+        <h1 className="text-2xl font-bold">
+          <Link to={href("/contacts")}>Contacts</Link>
+        </h1>
+        <Button asChild>
+          <Link to={href("/contacts/create")}>Create contact</Link>
+        </Button>
+      </div>
 
       <div className="grid md:grid-cols-5 gap-6 border rounded-lg overflow-hidden shadow-sm">
         {/* Contact list - spans 2 columns */}
