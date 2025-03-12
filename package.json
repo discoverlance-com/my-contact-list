@@ -6,6 +6,8 @@
     "build": "react-router build",
     "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js",
+    "format": "prettier --write \"./**/*.{ts,tsx,mdx}\" --cache",
+    "format:check": "prettier --check \"./**/*.{ts,tsx,mdx}\" --cache",
     "db:migrate": "drizzle-kit migrate",
     "db:generate": "drizzle-kit generate",
     "typegen": "react-router typegen",

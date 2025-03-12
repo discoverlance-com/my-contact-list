@@ -161,7 +161,6 @@ export function TextareaField({
   );
 }
 
-
 export function SwitchField({
   labelProps,
   switchProps,
@@ -179,12 +178,20 @@ export function SwitchField({
   const id = switchProps.id ?? fallbackId;
   const errorId = errors?.length ? `${id}-error` : undefined;
   const helperTextId = helperText ? `${id}-helper-text` : undefined;
-  const ariaDescribedBy = errorId && helperTextId ? `${errorId} ${helperTextId}` : errorId || helperTextId;
+  const ariaDescribedBy =
+    errorId && helperTextId
+      ? `${errorId} ${helperTextId}`
+      : errorId || helperTextId;
 
   return (
     <div className={cn("grid gap-2", className)}>
       <Label htmlFor={id} {...labelProps} />
-      <Switch id={id} aria-invalid={errorId ? true : undefined} aria-describedby={ariaDescribedBy} {...switchProps} />
+      <Switch
+        id={id}
+        aria-invalid={errorId ? true : undefined}
+        aria-describedby={ariaDescribedBy}
+        {...switchProps}
+      />
       <div className="px-2">
         {errorId ? <ErrorList id={errorId} errors={errors} /> : null}
         {helperText && (

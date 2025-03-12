@@ -46,5 +46,4 @@ export const CreateContactSchema = ContactSchema.pick({
   is_favorite: true,
 });
 
-
 export type Contact = z.infer<typeof ContactSchema>;
