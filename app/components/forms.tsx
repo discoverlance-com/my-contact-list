@@ -5,6 +5,7 @@ import { Label } from "~/components/ui/label";
 import { PhoneInput, type PhoneInputProps } from "./phone-input";
 import { Textarea } from "~/components/ui/textarea";
 import { cn } from "~/lib/utils";
+import { Switch } from "~/components/ui/switch";
 
 export type ListOfErrors = Array<string | null | undefined> | null | undefined;
 
@@ -148,6 +149,42 @@ export function TextareaField({
         aria-describedby={ariaDescribedBy}
         {...textareaProps}
       />
+      <div className="px-2">
+        {errorId ? <ErrorList id={errorId} errors={errors} /> : null}
+        {helperText && (
+          <p className="text-[0.8rem] text-muted-foreground" id={helperTextId}>
+            {helperText}
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+
+export function SwitchField({
+  labelProps,
+  switchProps,
+  errors,
+  className,
+  helperText,
+}: {
+  labelProps: React.LabelHTMLAttributes<HTMLLabelElement>;
+  switchProps: React.InputHTMLAttributes<HTMLInputElement>;
+  errors?: ListOfErrors;
+  helperText?: string;
+  className?: string;
+}) {
+  const fallbackId = useId();
+  const id = switchProps.id ?? fallbackId;
+  const errorId = errors?.length ? `${id}-error` : undefined;
+  const helperTextId = helperText ? `${id}-helper-text` : undefined;
+  const ariaDescribedBy = errorId && helperTextId ? `${errorId} ${helperTextId}` : errorId || helperTextId;
+
+  return (
+    <div className={cn("grid gap-2", className)}>
+      <Label htmlFor={id} {...labelProps} />
+      <Switch id={id} aria-invalid={errorId ? true : undefined} aria-describedby={ariaDescribedBy} {...switchProps} />
       <div className="px-2">
         {errorId ? <ErrorList id={errorId} errors={errors} /> : null}
         {helperText && (
