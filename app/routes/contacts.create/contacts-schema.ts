@@ -43,6 +43,8 @@ export const CreateContactSchema = ContactSchema.pick({
   email: true,
   address: true,
   phone_number: true,
+  is_favorite: true,
 });
+
 
 export type Contact = z.infer<typeof ContactSchema>;
