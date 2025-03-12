@@ -66,7 +66,7 @@ export const action = async ({ request, params }: Route.ActionArgs) => {
   const { id } = params;
 
   const submission = await parseWithZod(formData, {
-    schema: CreateContactSchema.superRefine(async (data: any, ctx: any) => {
+    schema: CreateContactSchema.superRefine(async (data, ctx) => {
       const emailExists = await db.query.contactsTable.findFirst({
         where: eq(contactsTable.email, data.email),
       });
@@ -127,7 +127,7 @@ export const meta = ({ data }: Route.MetaArgs) => {
   return [{ title: `Edit ${data.contact.name}` }];
 };
 
-export default function Page({ loaderData }: Route.ComponentProps) {
+export default function Page({ loaderData, actionData }: Route.ComponentProps) {
   const contact = loaderData.contact;
 
   const [isChecked, setIsChecked] = useState(contact?.is_favorite ?? false);
@@ -138,6 +138,7 @@ export default function Page({ loaderData }: Route.ComponentProps) {
     onValidate({ formData }) {
       return parseWithZod(formData, { schema: CreateContactSchema });
     },
+    lastResult: actionData?.result,
     shouldRevalidate: "onBlur",
     shouldValidate: "onBlur",
     defaultValue: {
